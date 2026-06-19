@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KasvuBuusti</title>
+
+<!--
+=========================================================
+  KASVUBUUSTI — YKSISIVUINEN LANDING PAGE
+=========================================================
+  Tämä tiedosto sisältää KOKO sivun: HTML, CSS ja
+  mahdollinen JS samassa tiedostossa. Kaikki muokattavat
+  kohdat on merkitty selkeillä kommenteilla:
+
+      <!-- MUOKKAA: ... -->
+
+  Etsi näitä kommentteja muokataksesi sisältöä.
+=========================================================
+-->
+
+<style>
+  :root {
+    /* ===== VÄRIPALETTI =====
+       Pääväri ja sen pari (secondary) on määritelty tähän.
+       Jos haluat vaihtaa värejä, riittää että muutat näitä. */
+    --color-primary: #0047AB;       /* Pääväri (sininen) */
+    --color-primary-dark: #003580;  /* Tummempi sävy hover-tiloihin ym. */
+    --color-secondary: #FF7A00;     /* Toissijainen väri (oranssi) - mm. hinnoittelukortti */
+    --color-secondary-dark: #E66A00;
+
+    --color-text-dark: #1A1A1A;
+    --color-text-light: #FFFFFF;
+    --color-text-muted: #5A5A5A;
+
+    --color-bg: #FFFFFF;
+    --color-bg-alt: #F5F7FA;
+
+    --font-main: 'Segoe UI', Arial, sans-serif;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: var(--font-main);
+    color: var(--color-text-dark);
+    background-color: var(--color-bg);
+    line-height: 1.6;
+  }
+
+  img {
+    max-width: 100%;
+    display: block;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  /* ===================================================
+     HEADER / LOGO
+     =================================================== */
+  .site-header {
+    width: 100%;
+    padding: 24px 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-bg);
+  }
+
+  .logo-wrap {
+    max-width: 220px;
+  }
+
+  /* ===================================================
+     HERO / OTSIKKO-OSIO
+     =================================================== */
+  .hero {
+    padding: 40px 5% 60px;
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    color: var(--color-primary);
+    margin-bottom: 20px;
+  }
+
+  .hero p {
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    color: var(--color-text-muted);
+    max-width: 700px;
+    margin: 0 auto 16px auto;
+  }
+
+  .hero p.lead-text {
+    font-size: clamp(1.15rem, 2.5vw, 1.4rem);
+    color: var(--color-text-dark);
+    font-weight: 500;
+  }
+
+  /* ===================================================
+     VIDEO-OSIO
+     =================================================== */
+  .video-section {
+    max-width: 850px;
+    margin: 0 auto 70px auto;
+    padding: 0 5%;
+  }
+
+  .video-wrapper {
+    position: relative;
+    width: 100%;
+    /* 16:9 kuvasuhde videolle */
+    padding-top: 56.25%;
+    background-color: #000;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  }
+
+  .video-wrapper video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* ===================================================
+     HINNOITTELU-OSIO
+     =================================================== */
+  .pricing-section {
+    padding: 20px 5% 90px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .pricing-card {
+    background-color: var(--color-secondary);
+    border-radius: 24px;
+    max-width: 380px;
+    width: 100%;
+    padding: 40px 32px;
+    color: var(--color-text-light);
+    text-align: center;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.18);
+  }
+
+  .pricing-card .plan-title {
+    font-size: 1.6rem;
+    font-weight: 800;
+    line-height: 1.25;
+    margin-bottom: 12px;
+  }
+
+  .pricing-card .plan-title .italic-word {
+    font-style: italic;
+  }
+
+  .pricing-card .plan-price {
+    font-size: 2.6rem;
+    font-weight: 900;
+    margin: 10px 0 4px 0;
+  }
+
+  .pricing-card .plan-price span {
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+
+  /* Yliviivattu alkuperäinen hinta */
+  .pricing-card .original-price {
+    font-size: 1.3rem;
+    font-weight: 700;
+    text-decoration: line-through;
+    opacity: 0.75;
+    margin-bottom: 4px;
+  }
+
+  /* Alennus-/tarjousilmoitus hinnan alla */
+  .pricing-card .discount-note {
+    font-size: 0.9rem;
+    font-weight: 700;
+    background-color: rgba(255,255,255,0.18);
+    border-radius: 8px;
+    padding: 6px 12px;
+    display: inline-block;
+    margin-bottom: 20px;
+  }
+
+  .pricing-card .plan-subtitle {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .pricing-card .divider {
+    border: none;
+    border-top: 2px dotted rgba(255,255,255,0.6);
+    margin: 16px 0 24px 0;
+  }
+
+  /* Ominaisuuslista — joka rivi on helposti kopioitava / poistettava */
+  .feature-list {
+    list-style: none;
+    text-align: left;
+  }
+
+  .feature-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 18px;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .feature-list li:last-child {
+    margin-bottom: 0;
+  }
+
+  .feature-list .check-icon {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    margin-top: 2px;
+  }
+
+  /* ===================================================
+     YHTEYSTIEDOT-OSIO
+     =================================================== */
+  .contact-section {
+    background-color: var(--color-bg-alt);
+    padding: 60px 5%;
+    text-align: center;
+  }
+
+  .contact-section h2 {
+    color: var(--color-primary);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    margin-bottom: 24px;
+  }
+
+  .contact-details {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 32px;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .contact-item {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--color-text-dark);
+  }
+
+  .contact-item .label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    margin-bottom: 4px;
+  }
+
+  /* ===================================================
+     FOOTER
+     =================================================== */
+  .site-footer {
+    text-align: center;
+    padding: 24px 5%;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+
+  /* ===================================================
+     RESPONSIIVISUUS
+     =================================================== */
+  @media (max-width: 600px) {
+    .pricing-card {
+      padding: 32px 24px;
+    }
+  }
+</style>
+</head>
+
+<body>
+
+  <!-- =========================================================
+       1) LOGO-OSIO
+       MUOKKAA: vaihda src="assets/logo.png" oman logotiedostosi
+       polkuun. Vie logotiedosto samaan kansioon assets-kansion
+       sisälle ja nimeä se esim. "logo.png", tai muuta polku
+       vastaamaan omaa tiedostoasi.
+  ========================================================== -->
+  <header class="site-header">
+    <div class="logo-wrap">
+      <!-- MUOKKAA: oma logo tähän -->
+      <img src="assets/logo.png" alt="Yrityksen logo">
+    </div>
+  </header>
+
+  <!-- =========================================================
+       2) HERO / OTSIKKO-OSIO
+       MUOKKAA: vaihda alla olevat tekstit omiksesi.
+       - h1 = iso pääotsikko
+       - ensimmäinen <p class="lead-text"> = isompi alaotsikko
+       - toinen <p> = pienempi selittävä teksti
+  ========================================================== -->
+  <section class="hero">
+    <!-- MUOKKAA: pääotsikko -->
+    <h1>Tähän pääotsikko, esim. "Lisää asiakkaita yrityksellesi automaattisesti"</h1>
+
+    <!-- MUOKKAA: isompi väliteksti -->
+    <p class="lead-text">
+      Tähän hieman pidempi mutta silti ytimekäs lause siitä, mitä
+      tarjoat ja kenelle.
+    </p>
+
+    <!-- MUOKKAA: pienempi selittävä teksti -->
+    <p>
+      Tähän voit lisätä lyhyen, pienemmällä fontilla näkyvän
+      kappaleen, jossa kerrot tarkemmin palvelustasi tai
+      kannustat katsomaan alla olevan videon.
+    </p>
+  </section>
+
+  <!-- =========================================================
+       3) INTRO-VIDEO-OSIO
+       MUOKKAA: vaihda src="assets/intro-video.mp4" oman
+       videotiedostosi polkuun. Vie videotiedosto assets-kansioon
+       ja nimeä se esim. "intro-video.mp4", tai muuta polku
+       vastaamaan omaa tiedostoasi.
+
+       Vinkki: pidä video-tiedosto kohtuullisen kokoisena
+       (esim. alle 50–100 MB), jotta sivu latautuu nopeasti.
+  ========================================================== -->
+  <section class="video-section">
+    <div class="video-wrapper">
+      <!-- MUOKKAA: oma video tähän. controls-attribuutti näyttää
+           toistopainikkeet katsojalle. poster="" voi osoittaa
+           kuvaan joka näkyy ennen kuin video käynnistetään. -->
+      <video controls poster="assets/video-poster.jpg">
+        <source src="assets/intro-video.mp4" type="video/mp4">
+        Selaimesi ei tue video-elementtiä.
+      </video>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       4) HINNOITTELUKORTTI
+       MUOKKAA: Tämä on täysin muokattavissa. Voit:
+       - vaihtaa otsikon, hinnan ja alaotsikon
+       - lisätä / poistaa <li>-rivejä feature-list -listasta
+       - jokainen <li> on yksi "checkmark"-rivi
+
+       LISÄÄ UUSI OMINAISUUS:
+       Kopioi yksi <li class="..."> -lohko alle ja vaihda teksti.
+
+       POISTA OMINAISUUS:
+       Poista koko <li>...</li> -lohko.
+  ========================================================== -->
+  <section class="pricing-section">
+    <div class="pricing-card">
+
+      <!-- MUOKKAA: paketin nimi/otsikko -->
+      <div class="plan-title">
+        Urakoitsijan <span class="italic-word">Ammattilais</span>paketti
+      </div>
+
+      <!-- MUOKKAA: alkuperäinen (yliviivattu) hinta. Poista koko div jos et halua näyttää sitä. -->
+      <div class="original-price">197€/kk</div>
+
+      <!-- MUOKKAA: nykyinen hinta. <span> sisällä oleva teksti on pienempi (esim. "/kk") -->
+      <div class="plan-price">
+        97€<span>/kk</span>
+      </div>
+
+      <!-- MUOKKAA: alennusilmoitus. Poista koko div jos et halua näyttää sitä. -->
+      <div class="discount-note">5 ensimmäiselle asiakkaalle alennettu hinta</div>
+
+      <!-- MUOKKAA: pieni alaotsikko kortin sisällä (valinnainen, voit myös poistaa koko divin) -->
+      <div class="plan-subtitle">Essentials-paketti +</div>
+
+      <hr class="divider">
+
+      <!-- MUOKKAA: ominaisuuslista. Lisää/poista <li>-rivejä vapaasti. -->
+      <ul class="feature-list">
+
+        <!-- OMINAISUUSRIVI 1 -->
+        <li>
+          <svg class="check-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="12" fill="white"/>
+            <path d="M7 12.5L10.5 16L17 9" stroke="#FF7A00" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <!-- MUOKKAA: ominaisuuden teksti -->
+          <span>1 vuoden liidien seuranta paluu- / suositteluasiakkaille</span>
+        </li>
+
+        <!-- OMINAISUUSRIVI 2 -->
+        <li>
+          <svg class="check-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="12" fill="white"/>
+            <path d="M7 12.5L10.5 16L17 9" stroke="#FF7A00" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <!-- MUOKKAA: ominaisuuden teksti -->
+          <span>Automaattinen Google-arviopyyntölinkki</span>
+        </li>
+
+        <!-- OMINAISUUSRIVI 3 -->
+        <li>
+          <svg class="check-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="12" fill="white"/>
+            <path d="M7 12.5L10.5 16L17 9" stroke="#FF7A00" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <!-- MUOKKAA: ominaisuuden teksti -->
+          <span>Nettisivun chat-toiminto kävijöiden muuttamiseksi asiakkaiksi</span>
+        </li>
+
+        <!-- OMINAISUUSRIVI 4 -->
+        <li>
+          <svg class="check-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="12" fill="white"/>
+            <path d="M7 12.5L10.5 16L17 9" stroke="#FF7A00" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <!-- MUOKKAA: ominaisuuden teksti -->
+          <span>Automaattiset teksti- ja sähköpostivahvistukset asiakkaille</span>
+        </li>
+
+        <!-- OMINAISUUSRIVI 5 -->
+        <li>
+          <svg class="check-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="12" fill="white"/>
+            <path d="M7 12.5L10.5 16L17 9" stroke="#FF7A00" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <!-- MUOKKAA: ominaisuuden teksti -->
+          <span>Yhdistetty viestilaatikko</span>
+        </li>
+
+        <!-- OMINAISUUSRIVI 6 -->
+        <li>
+          <svg class="check-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="12" fill="white"/>
+            <path d="M7 12.5L10.5 16L17 9" stroke="#FF7A00" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <!-- MUOKKAA: ominaisuuden teksti -->
+          <span>Täysi asiakastuki</span>
+        </li>
+
+        <!--
+          LISÄÄ TÄHÄN UUSI OMINAISUUSRIVI KOPIOIMALLA YLLÄ OLEVA
+          <li>...</li> -LOHKO JA VAIHTAMALLA <span>-TEKSTI
+        -->
+
+      </ul>
+
+    </div>
+  </section>
+
+  <!-- =========================================================
+       5) YHTEYSTIEDOT-OSIO
+       MUOKKAA: vaihda puhelinnumero, sähköposti ja muut tiedot
+       omiksesi. Voit lisätä/poistaa .contact-item -lohkoja.
+  ========================================================== -->
+  <section class="contact-section">
+    <h2>Ota yhteyttä</h2>
+    <div class="contact-details">
+
+      <!-- MUOKKAA: puhelinnumero -->
+      <div class="contact-item">
+        <span class="label">Puhelin</span>
+        +358 40 123 4567
+      </div>
+
+      <!-- MUOKKAA: sähköposti -->
+      <div class="contact-item">
+        <span class="label">Sähköposti</span>
+        info@kasvubuusti.com
+      </div>
+
+      <!-- MUOKKAA: voit lisätä esim. osoitteen tai muun tiedon kopioimalla tämän lohkon -->
+      <div class="contact-item">
+        <span class="label">Sijainti</span>
+        Suomi
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================
+       6) FOOTER
+       MUOKKAA: vaihda vuosiluku ja yrityksen nimi tarvittaessa.
+  ========================================================== -->
+  <footer class="site-footer">
+    &copy; 2026 KasvuBuusti. Kaikki oikeudet pidätetään.
+  </footer>
+
+</body>
+</html>
